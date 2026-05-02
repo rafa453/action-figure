@@ -141,7 +141,7 @@ $result = mysqli_query($conn, $query);
         <!-- Navbar -->
         <nav class="absolute top-0 w-full z-50 px-6 py-8 md:px-12 lg:px-24 flex justify-between items-center text-white">
             <div class="flex-shrink-0">
-                <a href="index.php" class="font-serif text-2xl tracking-[0.2em] font-semibold">MAROON<span class="text-maroon-500">.</span></a>
+                <a href="index.php" class="font-serif text-2xl tracking-[0.2em] font-semibold relative z-50">MAROON<span class="text-maroon-500">.</span></a>
             </div>
             <div class="hidden md:flex space-x-12 text-sm uppercase tracking-[0.15em] font-medium">
                 <a href="index.php" class="link-hover">Home</a>
@@ -149,10 +149,45 @@ $result = mysqli_query($conn, $query);
                 <a href="about.php" class="link-hover">Heritage</a>
                 <a href="admin.php" class="link-hover">Atelier</a>
             </div>
-            <div class="md:hidden">
-                <button class="text-sm uppercase tracking-widest">Menu</button>
+            <div class="md:hidden z-50">
+                <button id="mobile-menu-button" class="text-sm uppercase tracking-widest focus:outline-none relative z-50">Menu</button>
             </div>
         </nav>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 bg-dark z-40 flex flex-col items-center justify-center opacity-0 pointer-events-none transition-opacity duration-500">
+            <div class="flex flex-col space-y-8 text-center text-lg uppercase tracking-[0.2em] font-medium text-white">
+                <a href="index.php" class="hover:text-maroon-500 transition">Home</a>
+                <a href="catalog.php" class="hover:text-maroon-500 transition">Collection</a>
+                <a href="about.php" class="hover:text-maroon-500 transition">Heritage</a>
+                <a href="admin.php" class="hover:text-maroon-500 transition">Atelier</a>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const menuBtn = document.getElementById('mobile-menu-button');
+                const mobileMenu = document.getElementById('mobile-menu');
+                let isMenuOpen = false;
+
+                if(menuBtn) {
+                    menuBtn.addEventListener('click', () => {
+                        isMenuOpen = !isMenuOpen;
+                        if (isMenuOpen) {
+                            mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+                            mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
+                            menuBtn.innerText = 'Close';
+                            menuBtn.classList.add('text-white');
+                        } else {
+                            mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+                            mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+                            menuBtn.innerText = 'Menu';
+                            menuBtn.classList.remove('text-white');
+                        }
+                    });
+                }
+            });
+        </script>
 
         <!-- Hero Section -->
         <header class="relative min-h-screen flex items-center justify-center lg:justify-start lg:pl-24 bg-dark overflow-hidden">
